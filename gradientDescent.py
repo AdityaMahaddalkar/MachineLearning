@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def gradient_descent(x, y, theta, alpha, m, iterations):
     '''
     Inputs: x:numpy array of features, y: numpy array of labels, theta: 2x1 numpy array of initial theta0 and
@@ -19,12 +20,12 @@ def gradient_descent(x, y, theta, alpha, m, iterations):
             raise Exception("Number of features not equal")
     except Exception as e:
         print(e)
-    
+
     m1 = np.array([[1, i] for i in x])
     hypothesis = np.dot(m1, theta)
     loss = hypothesis - y
     cost = np.sum(loss**2)/m
-    
+
     del_J = np.array([np.sum(loss)/m, np.sum(loss*x)/m])
 
     while iterations > 0:
@@ -56,41 +57,38 @@ def multivariate_gradient_descent(x, y, theta, alpha, m, iterations):
     except Exception as e:
         print(e)
 
-
-
     v = np.ones((1, np.size(x[:, 0])))
     x = np.concatenate((v.T, x), axis=1)
     hypothesis = np.dot(x, theta)
     loss = hypothesis - y
-    J = sum(loss**2) / (2 *m)
-    #del_J = np.array([[sum(np.dot((hypothesis - y)), x[:,j])] for j in range(np.size(x[:, 1]))]) #Imporvise this
-    del_J =[]
-    for j in range(np.size(x[1,:])):
+    J = sum(loss**2) / (2 * m)
+    # del_J = np.array([[sum(np.dot((hypothesis - y)), x[:,j])] for j in range(np.size(x[:, 1]))]) #Imporvise this
+    del_J = []
+    for j in range(np.size(x[1, :])):
         loss = np.dot(hypothesis - y, x[:, j])
         del_J.append(loss)
     del_J = np.array(del_J)
-
 
     #iterations = 100000
 
     while iterations > 0:
         hypothesis = np.dot(x, theta)
-        #del_J = np.array([[sum(np.dot(hypothesis - y, x[:, j]))] for j in range(np.size(x[:, 1]))]) #Improvise this
+        # del_J = np.array([[sum(np.dot(hypothesis - y, x[:, j]))] for j in range(np.size(x[:, 1]))]) #Improvise this
 
         theta = theta - alpha * del_J
 
-        del_J =[]
-        for j in range(np.size(x[1,:])):
+        del_J = []
+        for j in range(np.size(x[1, :])):
             loss = np.dot(hypothesis - y, x[:, j])
             del_J.append(loss)
         del_J = np.array(del_J)
 
         iterations -= 1
-    
+
     return theta
 
 
-#### Test Area (Not useful)
+# Test Area (Not useful)
 '''
 def main():
     x = np.array([[1, 2, 3, 4, 5, 6]])
@@ -105,5 +103,3 @@ def main():
 if __name__ == '__main__':
     main()
 '''
-
-
